@@ -19,9 +19,6 @@ http.createServer(function(req,res){
         case '/detail':
             showChapter(res);
             break;
-        // case '/getDetail':
-        //     showContent(res);
-        //     break;
         case '/login':
             showLogin(res);
             break;
@@ -31,9 +28,6 @@ http.createServer(function(req,res){
         case '/showlist':
             showBList(res);
             break;
-        // case '/backstagelist':
-        //     showBackList(res);
-        //     break;
         case '/backstageadd':
             showBackAdd(res);
             break;
@@ -130,7 +124,7 @@ function backAdd(req,res){
     req.on("end",function(){
         var dataObj = querystring.parse(strData);
         var newObj = {
-            "chapterId": data[data.length-1].chapterId+1,
+            "chapterId": data.length+1,
             "chapterName": dataObj.chapterName,
             "imgPath": "images/1442457564979540.jpeg",
             "chapterDes": "注定，有些路，只能一个人走；有些事，",
@@ -152,6 +146,9 @@ function backDel(urlObj,res){
         if(num == data[i].chapterId){
             data.splice(i,1);
         }
+    }
+    for(var j = 0;j<data.length;j++){
+        data[j].chapterId = j+1;
     }
     res.writeHead(200,{"Content-Type":"text/plain"});
     res.write("success");
